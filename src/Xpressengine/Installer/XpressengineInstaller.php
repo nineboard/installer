@@ -5,12 +5,14 @@
  * PHP version 5
  *
  * @category    Installer
- * @package     Xpressengine\Installer
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        http://www.xpressengine.com
  */
+
 namespace Xpressengine\Installer;
 
 use Composer\Composer;
@@ -26,15 +28,15 @@ use Composer\Util\Filesystem;
  * This class is extend composer installer for XpressEngine plugins.
  *
  * @category    Installer
- * @package     Xpressengine\Installer
+ *
  * @author      XE Developers <developers@xpressengine.com>
  * @copyright   2019 Copyright XEHub Corp. <https://www.xehub.io>
  * @license     http://www.gnu.org/licenses/lgpl-3.0-standalone.html LGPL
+ *
  * @link        http://www.xpressengine.com
  */
 class XpressengineInstaller extends LibraryInstaller
 {
-
     /**
      * @var array
      */
@@ -48,13 +50,9 @@ class XpressengineInstaller extends LibraryInstaller
     /**
      * Initializes library installer.
      *
-     * @param IOInterface $io
-     * @param Composer $composer
-     * @param string $type
-     * @param Filesystem|null $filesystem
-     * @param BinaryInstaller|null $binaryInstaller
+     * @param  string  $type
      */
-    public function __construct(IOInterface $io, Composer $composer, $type = 'library', Filesystem $filesystem = null, BinaryInstaller $binaryInstaller = null)
+    public function __construct(IOInterface $io, Composer $composer, $type = 'library', ?Filesystem $filesystem = null, ?BinaryInstaller $binaryInstaller = null)
     {
         static::$changed = [
             'installed' => [],
@@ -73,14 +71,14 @@ class XpressengineInstaller extends LibraryInstaller
     /**
      * Directory in which the plugin is installed
      *
-     * @param PackageInterface $package 3rd party plugin package instance
+     * @param  PackageInterface  $package  3rd party plugin package instance
      * @return string
      */
     public function getInstallPath(PackageInterface $package)
     {
-        list(, $packageName) = explode('/', $package->getPrettyName());
+        [, $packageName] = explode('/', $package->getPrettyName());
 
-        return 'plugins/' . $packageName;
+        return 'plugins/'.$packageName;
     }
 
     /**
@@ -88,12 +86,12 @@ class XpressengineInstaller extends LibraryInstaller
      *
      * Check XpressEngine plugin type
      *
-     * @param string $packageType type of package
+     * @param  string  $packageType  type of package
      * @return bool
      */
     public function supports($packageType)
     {
-        return 'xpressengine-plugin' === $packageType;
+        return $packageType === 'xpressengine-plugin';
     }
 
     /**
@@ -111,8 +109,8 @@ class XpressengineInstaller extends LibraryInstaller
     {
         if (defined('__XE_PLUGIN_SKIP__') || $this->checkDevPlugin($package)) {
             $this->io->writeError(
-                "  - Installing <info>".$package->getName()."</info> (<comment>".$package->getFullPrettyVersion(
-                )."</comment>): <comment>Skip by Xpressengine-installer</comment>"
+                '  - Installing <info>'.$package->getName().'</info> (<comment>'.$package->getFullPrettyVersion(
+                ).'</comment>): <comment>Skip by Xpressengine-installer</comment>'
             );
 
             return null;
@@ -126,6 +124,7 @@ class XpressengineInstaller extends LibraryInstaller
         }
 
         static::$changed['installed'][$package->getName()] = $package->getPrettyVersion();
+
         return $promise;
     }
 
@@ -136,8 +135,8 @@ class XpressengineInstaller extends LibraryInstaller
     {
         if (defined('__XE_PLUGIN_SKIP__') || $this->checkDevPlugin($initial)) {
             $this->io->writeError(
-                "  - Updating <info>".$initial->getName()."</info> (<comment>".$initial->getFullPrettyVersion(
-                )."</comment>): <comment>Skip by Xpressengine-installer</comment>"
+                '  - Updating <info>'.$initial->getName().'</info> (<comment>'.$initial->getFullPrettyVersion(
+                ).'</comment>): <comment>Skip by Xpressengine-installer</comment>'
             );
 
             return null;
@@ -151,6 +150,7 @@ class XpressengineInstaller extends LibraryInstaller
         }
 
         static::$changed['updated'][$target->getName()] = $target->getPrettyVersion();
+
         return $promise;
     }
 
@@ -161,8 +161,8 @@ class XpressengineInstaller extends LibraryInstaller
     {
         if (defined('__XE_PLUGIN_SKIP__') || $this->checkDevPlugin($package)) {
             $this->io->writeError(
-                "  - Removing <info>".$package->getName()."</info> (<comment>".$package->getFullPrettyVersion(
-                )."</comment>): <comment>Skip by Xpressengine-installer</comment>"
+                '  - Removing <info>'.$package->getName().'</info> (<comment>'.$package->getFullPrettyVersion(
+                ).'</comment>): <comment>Skip by Xpressengine-installer</comment>'
             );
 
             if ($this->checkDevPlugin($package)) {
@@ -181,16 +181,17 @@ class XpressengineInstaller extends LibraryInstaller
     /**
      * Determine if given package is develop plugin for XE
      *
-     * @param PackageInterface $package package instance
+     * @param  PackageInterface  $package  package instance
      * @return bool
      */
     protected function checkDevPlugin(PackageInterface $package)
     {
         $path = $this->getInstallPath($package);
 
-        if(file_exists($path.'/vendor')) {
+        if (file_exists($path.'/vendor')) {
             return true;
         }
+
         return false;
     }
 }
