@@ -1,7 +1,9 @@
 <?php
-use Mockery as m;
 
-class XpressengineInstallerTest extends PHPUnit_Framework_TestCase
+use Mockery as m;
+use PHPUnit\Framework\TestCase;
+
+class XpressengineInstallerTest extends TestCase
 {
     public function testGetPackageBasePathReturnsBasePathString()
     {

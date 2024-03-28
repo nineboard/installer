@@ -1,11 +1,11 @@
 <?php
 
-if (!function_exists('array_forget')) {
+if (! function_exists('array_forget')) {
     function array_forget(&$array, $keys)
     {
         $original = &$array;
 
-        $keys = (array)$keys;
+        $keys = (array) $keys;
 
         if (count($keys) === 0) {
             return;
@@ -32,16 +32,15 @@ if (!function_exists('array_forget')) {
     }
 }
 
-if (!function_exists('array_set')) {
+if (! function_exists('array_set')) {
     /**
      * Set an array item to a given value using "dot" notation.
      *
      * If no key is given to the method, the entire array will be replaced.
      *
-     * @param array $array
-     * @param string $key
-     * @param mixed $value
-     *
+     * @param  array  $array
+     * @param  string  $key
+     * @param  mixed  $value
      * @return array
      */
     function array_set(&$array, $key, $value)
@@ -58,7 +57,7 @@ if (!function_exists('array_set')) {
             // If the key doesn't exist at this depth, we will just create an empty array
             // to hold the next value, allowing us to create the arrays to hold final
             // values at the correct depth. Then we'll keep digging into the array.
-            if (!isset($array[$key]) || !is_array($array[$key])) {
+            if (! isset($array[$key]) || ! is_array($array[$key])) {
                 $array[$key] = [];
             }
 
@@ -71,14 +70,13 @@ if (!function_exists('array_set')) {
     }
 }
 
-if (!function_exists('array_get')) {
+if (! function_exists('array_get')) {
     /**
      * Get an item from an array using "dot" notation.
      *
-     * @param array $array
-     * @param string $key
-     * @param mixed $default
-     *
+     * @param  array  $array
+     * @param  string  $key
+     * @param  mixed  $default
      * @return mixed
      */
     function array_get($array, $key, $default = null)
@@ -92,7 +90,7 @@ if (!function_exists('array_get')) {
         }
 
         foreach (explode('.', $key) as $segment) {
-            if (!is_array($array) || !array_key_exists($segment, $array)) {
+            if (! is_array($array) || ! array_key_exists($segment, $array)) {
                 return $default;
             }
 
