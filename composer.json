@@ -1,5 +1,5 @@
 {
-    "name": "xpressengine/installer",
+    "name": "nineboard/installer",
     "type": "composer-plugin",
     "license": "LGPL-3.0-or-later",
     "authors": [
