@@ -1,5 +1,6 @@
 {
     "name": "nineboard/installer",
+    "description": "This installer can assist with the installation of our packages.",
     "type": "composer-plugin",
     "license": "LGPL-3.0-or-later",
     "authors": [
